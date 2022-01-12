@@ -1,7 +1,8 @@
 import { 
     checkAuth, 
     logout,
-    fetchWorkshops 
+    fetchWorkshops,
+    deleteParticipant
 } from '../fetch-utils.js';
 
 checkAuth();
@@ -14,6 +15,7 @@ logoutButton.addEventListener('click', () => {
 });
 
 async function fetchAndDisplayWorkshops() {
+    workshopsListEl.textContent = '';
     const workshops = await fetchWorkshops();
     
     for (let workshop of workshops) {
@@ -35,8 +37,10 @@ async function fetchAndDisplayWorkshops() {
             deleteButton.textContent = 'Delete';
 
             deleteButton.addEventListener('click', async() => {
-                
-            })
+                await deleteParticipant(participant.id);
+
+                await fetchAndDisplayWorkshops();
+            });
 
             participantEl.append(participantName, deleteButton);
             
