@@ -23,3 +23,35 @@ Additional considerations:
   - What needs to live in a persistence layer?
 - Is there some state we need to initialize?
 - Ask: should any of this work be abstracted into functions? (i.e., is the work complicated? can it be resused?)
+
+
+
+# Plan
+## WORKSHOPS PAGE
+### HTML
+- div to hold list of workshops
+- button to go to Add Participant Page
+- button for View Workshops page
+
+### Events
+- on load
+    - fetch and display workshops and participants from supabase
+
+## ADD PARTICIPANT PAGE
+### HTML
+- form
+    - input for name
+    - dynamically rendered dropdown for Workshops
+    - submit button
+
+- button to go to View Workshops Page
+- button for Add Participants
+
+### Events
+- on load
+    - dynamically render dropdown for workshops - fetch workshops
+- on submit form
+    - grab participant name and value from dropdown
+    - insert in supabase
+    - send user back to workshops or show confirmation?
+
