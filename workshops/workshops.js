@@ -5,6 +5,8 @@ import {
     deleteParticipant
 } from '../fetch-utils.js';
 
+import { renderParticipant } from './render-utils.js';
+
 checkAuth();
 
 const logoutButton = document.getElementById('logout');
@@ -13,6 +15,7 @@ const workshopsListEl = document.querySelector('.workshops-list');
 logoutButton.addEventListener('click', () => {
     logout();
 });
+
 
 async function fetchAndDisplayWorkshops() {
     workshopsListEl.textContent = '';
@@ -27,13 +30,9 @@ async function fetchAndDisplayWorkshops() {
         workshopNameEl.textContent = workshop.name;
         
         for (let participant of workshop.workshop_participants) {
-            const participantEl = document.createElement('div');
-            const participantName = document.createElement('p');
-            const deleteButton = document.createElement('button');
-            
-            participantName.textContent = participant.name;
-            participantEl.classList.add('participant');
+            const participantEl = renderParticipant(participant);
 
+            const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
 
             deleteButton.addEventListener('click', async() => {
@@ -42,7 +41,7 @@ async function fetchAndDisplayWorkshops() {
                 await fetchAndDisplayWorkshops();
             });
 
-            participantEl.append(participantName, deleteButton);
+            participantEl.append(deleteButton);
             
             participantsListEl.append(participantEl);
         }
